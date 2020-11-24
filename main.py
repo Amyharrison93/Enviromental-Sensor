@@ -71,7 +71,10 @@ def display_text(variable, data, unit):
     vmax = max(values[variable])
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variable]]
     # Format the variable name and value
-    message = "{}: {:.1f} {}".format(variable[:4], data, unit)
+    for i in range(0,len(variable)-10):
+        firstLetter = i
+        lastLetter = i + 10
+    message = "{}: {:.1f} {}".format(variable[firstLetter:lastLetter], data, unit)
     logging.info(message)
     draw.rectangle((0, 0, WIDTH, HEIGHT), (255, 255, 255))
 
