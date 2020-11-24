@@ -79,10 +79,10 @@ def display_text(variableKey, data, unit, position):
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variableKey[0:variableLength]]]
     # Format the variable name and value
     
-    messageRaw = "          {}: {:.1f} {}          ".format(variableKey, data, unit)
+    messageRaw = "     {}: {:.1f} {}     ".format(variableKey, data, unit)
     if position == len(messageRaw)+10:
         position = 0
-        
+
     message = messageRaw[firstLetter:lastLetter]
 
     position += 1
@@ -167,16 +167,13 @@ while True:
         data = raw_temp - ((avg_cpu_temp - raw_temp) / factor)
         
         if(data > 30):
-            print("Temperiture exceeds safe value")
-            unit = "C Temperiture exceeds safe value"
+            unit = "C, Temperiture exceeds safe value"
             #maybe warn someone here? buzzer??
         elif():
-            print("Temperiture at safe levels")
-            unit = "C Temperiture at safe levels"
-        ##if temperiture subceeds safe levels flash blue 13deg
+            unit = "C, Temperiture at safe levels"
+
         elif(data < 13):
-            print("Temperiture below safe value")
-            unit = "C Temperiture below safe value"
+            unit = "C, Temperiture below safe value"
             #maybe warn someone here? buzzer??
 
         position = display_text(variables[mode], data, unit, position)
@@ -193,14 +190,14 @@ while True:
         data = bme280.get_humidity()
         position = display_text(variables[mode], data, unit, position)
 
-        #if humidity exceeds safe levels flash red
         if(data > 70):
-            print("humidity above safe levels")
+            unit = "%: humidity above safe levels"
+
         elif(data < 20):
-            print("humidity below safe levels")
+            unit = "%: humidity below safe levels"
+
         else:
-            print("humidity acceptable")
-        ##if humidity subceeds safe levels flash blue
+            unit = "%: humidity acceptable"
 
     if mode == 3:
         # variable = "light"
@@ -219,11 +216,13 @@ while True:
         position = display_text(variables[mode], data, unit, position)
 
         if((data + 0.05 - 0.8) / 1.9195 < 10):
-            print("NO2 levels are good!")
+            unit = "kOhm, NO2 levels are good!"
+
         elif((data +0.05 - 0.8) / 1.9195 < 20):
-            print("NO2 levels are high but still good")
+            unit = "kOhm, NO2 levels are high but still good"
+
         elif((data + 0.05 - 0.8) / 1.9195 >= 20):
-            print("NO2 levels are above measurable levels")
+            unit = "kOhm, NO2 levels are above measurable levels"
             
     if mode == 5:
         # variable = "red"
@@ -233,17 +232,17 @@ while True:
         position = display_text(variables[mode], data, unit, position)
 
         if ((data - 100) / 1.4 > 0):
-            print("CO levels are safe")
+           unit = "kOhm CO levels are safe"
         elif ((data - 100) / 1.4 > 10):
-            print("CO levels are concerning")
+            unit = "kOhm CO levels are concerning"
         elif ((data - 100) / 1.4 > 50):
-            print("CO levels are not safe, do not spend longer than 30 minutes in here")
+            unit = "kOhm CO levels are not safe, do not spend longer than 30 minutes in here"
         elif ((data - 100) / 1.4 > 200):
-            print("CO levels are dangerous")
+            unit = "kOhm CO levels are dangerous"
         elif ((data - 100) / 1.4 > 400):
-            print("CO levels are highly dangerous")
+            unit = "kOhm CO levels are highly dangerous"
         elif ((data - 100) / 1.4 > 800):
-            print("leave room immediately")
+            unit = "kOhm leave room immediately"
 
     if mode == 6:
         # variable = "nh3"
@@ -253,6 +252,6 @@ while True:
         position = display_text(variables[mode], data, unit, position)
 
         if((data - 10) / 4.96666666667 < 25):
-            print("ammonia levels should be safe")
+            unit = "kOhm ammonia levels should be safe")
 
     switchCounter += 1
