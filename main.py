@@ -145,11 +145,15 @@ try:
             data = raw_temp - ((avg_cpu_temp - raw_temp) / factor)
             display_text(variables[mode], data, unit)
 
+            #if temperiture exceeds safe levels flash red
+            ##if temperiture subceeds safe levels flash blue
+
         if mode == 1:
             # variable = "pressure"
             unit = "hPa"
             data = bme280.get_pressure()
             display_text(variables[mode], data, unit)
+
 
         if mode == 2:
             # variable = "humidity"
@@ -187,6 +191,6 @@ try:
             data = data.nh3 / 1000
             display_text(variables[mode], data, unit)
 
-        switchCounter + switchCounter + 1
+        switchCounter = switchCounter + 1
 except:
     print("error") 
