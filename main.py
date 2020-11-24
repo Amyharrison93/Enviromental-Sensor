@@ -79,7 +79,7 @@ def display_text(variableKey, data, unit, position):
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variableKey[0:variableLength]]]
     # Format the variable name and value
     
-    messageRaw = "     {:.1f} {}     ".format(data, unit)
+    messageRaw = "{:.1f} {}   ".format(data, unit)
     if position == len(messageRaw)+10:
         position = 0
     print(messageRaw)
@@ -141,7 +141,7 @@ for v in variables:
 # The main loop
 
 while True:
-    #proximity = ltr559.get_proximity()
+    proximity = ltr559.get_proximity()
 
     # If the proximity crosses the threshold, toggle the mode
 #   if (proximity > 1500 and time.time() - last_page > delay):
