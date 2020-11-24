@@ -83,8 +83,8 @@ def display_text(variableKey, data, unit, position):
     # Format the variable name and value
     
     messageRaw = "          {}: {:.1f} {}          ".format(variableKey, data, unit)
-    
-    message = message[firstLetter:lastLetter]
+
+    message = messageRaw[firstLetter:lastLetter]
 
     position += 1
     logging.info(message)
