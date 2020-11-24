@@ -233,6 +233,8 @@ while True:
         data = gas.read_all()
         data = data.reducing / 1000
 
+        print((data - 100) / 1.4)
+
         if ((data - 100) / 1.4 > 0):
            unit = "ppm CO levels are safe"
         elif ((data - 100) / 1.4 > 10):
