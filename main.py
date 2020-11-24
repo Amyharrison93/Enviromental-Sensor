@@ -136,6 +136,7 @@ values = {}
 
 switchCounter = 0
 position = 0
+calibrationRead = 0
 for v in variables:
     values[v] = [1] * WIDTH
 
@@ -157,8 +158,12 @@ while True:
         last_page = time.time()
         switchCounter = 0
         position = 0
+    if runtime > 6000:
         calibrationRead = gas.read_all()
         calibrationRead = calibrationRead.reducing / 1000
+    else:
+        calibrationRead = 1
+        runtime += 1
 
     # One mode for each variable
     if mode == 0:
