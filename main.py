@@ -159,11 +159,17 @@ while True:
         last_page = time.time()
         switchCounter = 0
         position = 0
+
     if runtime > 6000:
         calibrationRead = gas.read_all()
-        calibrationRead = calibrationRead.reducing / 1000
+        calibrationRed = calibrationRead.reducing / 1000
+        calibrationOx = calibrationRead.oxidised / 1000
+        calibrationNH3 = calibrationRead.NH3 / 1000
     else:
         calibrationRead = 1
+        calibrationRed = 1
+        calibrationOx = 1
+        calibrationNH3 = 1
         runtime += 1
 
     # One mode for each variable
@@ -223,7 +229,6 @@ while True:
         #unit = "kOhm" #0.8 - 20 for NO2
         data = gas.read_all()
         data = data.oxidising / 1000
-        
 
         if((data + 0.05 - 0.8) / 1.9195 < 10):
             unit = "ppm, NO2 levels are good!"
@@ -242,9 +247,9 @@ while True:
         data = gas.read_all()
         data = data.reducing / 1000
 
-        print(math.pow(10, -1.25 * math.log10(data/calibrationRead) + 0.64))
+        print(math.pow(10, -1.25 * math.log10(data/calibrationRed) + 0.64))
         
-        data = math.pow(10, -1.25 * math.log10(data/calibrationRead) + 0.64)
+        data = math.pow(10, -1.25 * math.log10(data/calibrationRed) + 0.64)
 
         if (data < 10):
            unit = "ppm CO levels are safe"
