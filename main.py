@@ -63,7 +63,18 @@ top_pos = 25
 
 
 # Displays data and text on the 0.96" LCD
-def display_text(variable, data, unit):
+def display_text(variable, data, unit, position):
+
+    variableLength = len(variable)
+
+    if position < 11:
+        firstLetter = position
+        lastLetter = position + 10
+    if position == variableLength:
+        position = 0
+    if !(variable[len(variable)-2:len(variable)-1] == " "):
+        variable = variable + "          "
+
     # Maintain length of list
     values[variable] = values[variable][1:] + [data]
     # Scale the values for the variable between 0 and 1
@@ -71,10 +82,10 @@ def display_text(variable, data, unit):
     vmax = max(values[variable])
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variable]]
     # Format the variable name and value
-    for i in range(0,len(variable)-10):
-        firstLetter = i
-        lastLetter = i + 10
+    
     message = "{}: {:.1f} {}".format(variable[firstLetter:lastLetter], data, unit)
+
+    i += 1
     logging.info(message)
     draw.rectangle((0, 0, WIDTH, HEIGHT), (255, 255, 255))
 
@@ -90,6 +101,7 @@ def display_text(variable, data, unit):
     # Write the text at the top in black
     draw.text((0, 0), message, font=font, fill=(0, 0, 0))
     st7735.display(img)
+    return position
 
 
 # Get the temperature of the CPU for compensation
@@ -167,19 +179,19 @@ try:
                 unit = "C Temperiture below safe value"
                 #maybe warn someone here? buzzer??
 
-            display_text(variables[mode], data, unit)
+            position = display_text(variables[mode], data, unit, position)
 
         if mode == 1:
             # variable = "pressure"
             unit = "hPa"
             data = bme280.get_pressure()
-            display_text(variables[mode], data, unit)
+            position = display_text(variables[mode], data, unit, position)
 
         if mode == 2:
             # variable = "humidity"
             unit = "%"
             data = bme280.get_humidity()
-            display_text(variables[mode], data, unit)
+            position = display_text(variables[mode], data, unit, position)
 
             #if humidity exceeds safe levels flash red
             if(data > 70):
@@ -197,14 +209,14 @@ try:
                 data = ltr559.get_lux()
             else:
                 data = 1
-            display_text(variables[mode], data, unit)
+            position = display_text(variables[mode], data, unit, position)
 
         if mode == 4:
             # variable = "ox"
             unit = "kOhm" #0.8 - 20 for NO2
             data = gas.read_all()
             data = data.oxidising / 1000
-            display_text(variables[mode], data, unit)
+            position = display_text(variables[mode], data, unit, position)
 
             if((data + 0.05 - 0.8) / 1.9195 < 10):
                 print("NO2 levels are good!")
@@ -218,7 +230,7 @@ try:
             unit = "kOhm" #100-1500 for CO
             data = gas.read_all()
             data = data.reducing / 1000
-            display_text(variables[mode], data, unit)
+            position = display_text(variables[mode], data, unit, position)
 
             if ((data - 100) / 1.4 > 0):
                 print("CO levels are safe")
@@ -238,7 +250,7 @@ try:
             unit = "kOhm" #10 - 1500 for NH3 
             data = gas.read_all()
             data = data.nh3 / 1000
-            display_text(variables[mode], data, unit)
+            position = display_text(variables[mode], data, unit, position)
 
             if((data - 10) / 4.96666666667 < 25):
                 print("ammonia levels should be safe")
