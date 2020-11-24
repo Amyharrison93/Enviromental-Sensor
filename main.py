@@ -116,6 +116,7 @@ variables = ["temperature",
              "nh3"]
 
 values = {}
+
 switchCounter = 0
 
 for v in variables:
@@ -127,9 +128,14 @@ try:
         proximity = ltr559.get_proximity()
 
         # If the proximity crosses the threshold, toggle the mode
-        if (proximity > 1500 and time.time() - last_page > delay) or (switchCounter > 50):
+        if (proximity > 1500 and time.time() - last_page > delay):
             mode += 1
-            mode %= len(variables-1)
+            mode %= len(variables)
+            last_page = time.time()
+
+        if (switchCounter > 50):
+            mode += 1
+            mode %= len(variables)
             last_page = time.time()
             switchCounter = 0
 
@@ -161,6 +167,9 @@ try:
             data = bme280.get_humidity()
             display_text(variables[mode], data, unit)
 
+            #if humidity exceeds safe levels flash red
+            ##if humidity subceeds safe levels flash blue
+
         if mode == 3:
             # variable = "light"
             unit = "Lux"
@@ -191,6 +200,6 @@ try:
             data = data.nh3 / 1000
             display_text(variables[mode], data, unit)
 
-        switchCounter = switchCounter + 1
+        switchCounter += 1
 except:
     print("error") 
