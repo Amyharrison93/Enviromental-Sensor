@@ -68,7 +68,7 @@ def display_text(variableKey, data, unit, position):
     variable = variableKey
     variableLength = len(variable)
     
-    if position == variableLength:
+    if position == variableLength+10:
         position = 0
     if position < 11:
         firstLetter = position
