@@ -231,7 +231,7 @@ try:
             data = data.nh3 / 1000
             display_text(variables[mode], data, unit)
 
-            if((data - 10) / 4.96666666667 < 25)
+            if((data - 10) / 4.96666666667 < 25):
                 print("ammonia levels should be safe")
 
         switchCounter += 1
