@@ -82,7 +82,7 @@ def display_text(variableKey, data, unit, position):
     messageRaw = "     {:.1f} {}     ".format(data, unit)
     if position == len(messageRaw)+10:
         position = 0
-
+    print(messageRaw)
     message = messageRaw[firstLetter:lastLetter]
 
     position += 1
