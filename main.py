@@ -74,7 +74,9 @@ def display_text(variable, data, unit, position):
         position = 0
     if not(variable[len(variable)-2:len(variable)-1] == " "):
         variable = variable + "          "
-
+    
+    print(variable[0:variableLength])
+    
     # Maintain length of list
     values[variable] = values[variable][0:variableLength] + [data]
     # Scale the values for the variable between 0 and 1
