@@ -67,9 +67,6 @@ def display_text(variableKey, data, unit, position):
 
     variable = variableKey
     variableLength = len(variable)
-    
-    if position == variableLength+10:
-        position = 0
 
     firstLetter = position
     lastLetter = position + 10
@@ -83,7 +80,9 @@ def display_text(variableKey, data, unit, position):
     # Format the variable name and value
     
     messageRaw = "          {}: {:.1f} {}          ".format(variableKey, data, unit)
-
+    if position == len(messageRaw)+10:
+        position = 0
+        
     message = messageRaw[firstLetter:lastLetter]
 
     position += 1
