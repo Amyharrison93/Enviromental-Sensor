@@ -237,21 +237,23 @@ while True:
         data = data.reducing / 1000
 
         print(math.pow(10, -1.25 * math.log10(data/calibrationRead) + 0.64))
+        
+        data = math.pow(10, -1.25 * math.log10(data/calibrationRead) + 0.64)
 
-        if ((data - 100) / 1.4 < 10):
+        if (data < 10):
            unit = "ppm CO levels are safe"
-        elif ((data - 100) / 1.4 < 20):
+        elif (data < 20):
             unit = "ppm CO levels are concerning"
-        elif ((data - 100) / 1.4 < 50):
+        elif (data < 50):
             unit = "ppm CO levels are not safe, do not spend longer than 30 minutes in here"
-        elif ((data - 100) / 1.4 < 200):
+        elif (data < 200):
             unit = "ppm CO levels are dangerous"
-        elif ((data - 100) / 1.4 < 400):
+        elif (data < 400):
             unit = "ppm CO levels are highly dangerous"
-        elif ((data - 100) / 1.4 < 800):
+        elif (data < 800):
             unit = "ppm leave room immediately"
 
-        position = display_text(variables[mode], (data - 100) / 1.4, unit, position)
+        position = display_text(variables[mode], data, unit, position)
 
     if mode == 6:
         # variable = "nh3"
