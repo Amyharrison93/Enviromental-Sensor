@@ -158,7 +158,7 @@ while True:
     # One mode for each variable
     if mode == 0:
         # variable = "temperature"
-        unit = "C"
+        #unit = "C"
         cpu_temp = get_cpu_temperature()
         # Smooth out with some averaging to decrease jitter
         cpu_temps = cpu_temps[1:] + [cpu_temp]
@@ -186,7 +186,7 @@ while True:
 
     if mode == 2:
         # variable = "humidity"
-        unit = "%"
+        #unit = "%"
         data = bme280.get_humidity()
         position = display_text(variables[mode], data, unit, position)
 
@@ -210,7 +210,7 @@ while True:
 
     if mode == 4:
         # variable = "ox"
-        unit = "kOhm" #0.8 - 20 for NO2
+        #unit = "kOhm" #0.8 - 20 for NO2
         data = gas.read_all()
         data = data.oxidising / 1000
         position = display_text(variables[mode], data, unit, position)
@@ -226,7 +226,7 @@ while True:
             
     if mode == 5:
         # variable = "red"
-        unit = "kOhm" #100-1500 for CO
+        #unit = "kOhm" #100-1500 for CO
         data = gas.read_all()
         data = data.reducing / 1000
         position = display_text(variables[mode], data, unit, position)
