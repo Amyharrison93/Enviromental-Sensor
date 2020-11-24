@@ -163,7 +163,7 @@ while True:
     if runtime > 6000:
         calibrationRead = gas.read_all()
         calibrationRed = calibrationRead.reducing / 1000
-        calibrationOx = calibrationRead.oxidised / 1000
+        calibrationOx = calibrationRead.oxidising / 1000
         calibrationNH3 = calibrationRead.NH3 / 1000
     else:
         calibrationRead = 1
