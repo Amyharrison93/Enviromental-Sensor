@@ -85,7 +85,7 @@ def display_text(variable, data, unit, position):
     
     message = "{}: {:.1f} {}".format(variable[firstLetter:lastLetter], data, unit)
 
-    i += 1
+    position += 1
     logging.info(message)
     draw.rectangle((0, 0, WIDTH, HEIGHT), (255, 255, 255))
 
