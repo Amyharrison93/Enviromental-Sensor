@@ -139,122 +139,120 @@ for v in variables:
     values[v] = [1] * WIDTH
 
 # The main loop
-try:
-    while True:
-        proximity = ltr559.get_proximity()
 
-        # If the proximity crosses the threshold, toggle the mode
-        if (proximity > 1500 and time.time() - last_page > delay):
-            mode += 1
-            mode %= len(variables)
-            last_page = time.time()
+while True:
+    proximity = ltr559.get_proximity()
 
-        if (switchCounter > 100):
-            mode += 1
-            mode %= len(variables)
-            last_page = time.time()
-            switchCounter = 0
+    # If the proximity crosses the threshold, toggle the mode
+    if (proximity > 1500 and time.time() - last_page > delay):
+        mode += 1
+        mode %= len(variables)
+        last_page = time.time()
 
-        # One mode for each variable
-        if mode == 0:
-            # variable = "temperature"
-            unit = "C"
-            cpu_temp = get_cpu_temperature()
-            # Smooth out with some averaging to decrease jitter
-            cpu_temps = cpu_temps[1:] + [cpu_temp]
-            avg_cpu_temp = sum(cpu_temps) / float(len(cpu_temps))
-            raw_temp = bme280.get_temperature()
-            data = raw_temp - ((avg_cpu_temp - raw_temp) / factor)
+    if (switchCounter > 100):
+        mode += 1
+        mode %= len(variables)
+        last_page = time.time()
+        switchCounter = 0
+
+    # One mode for each variable
+    if mode == 0:
+        # variable = "temperature"
+        unit = "C"
+        cpu_temp = get_cpu_temperature()
+        # Smooth out with some averaging to decrease jitter
+        cpu_temps = cpu_temps[1:] + [cpu_temp]
+        avg_cpu_temp = sum(cpu_temps) / float(len(cpu_temps))
+        raw_temp = bme280.get_temperature()
+        data = raw_temp - ((avg_cpu_temp - raw_temp) / factor)
+        
+        if(data > 30):
+            print("Temperiture exceeds safe value")
+            unit = "C Temperiture exceeds safe value"
+            #maybe warn someone here? buzzer??
+        elif():
+            print("Temperiture at safe levels")
+            unit = "C Temperiture at safe levels"
+        ##if temperiture subceeds safe levels flash blue 13deg
+        elif(data < 13):
+            print("Temperiture below safe value")
+            unit = "C Temperiture below safe value"
+            #maybe warn someone here? buzzer??
+
+        position = display_text(variables[mode], data, unit, position)
+
+    if mode == 1:
+        # variable = "pressure"
+        unit = "hPa"
+        data = bme280.get_pressure()
+        position = display_text(variables[mode], data, unit, position)
+
+    if mode == 2:
+        # variable = "humidity"
+        unit = "%"
+        data = bme280.get_humidity()
+        position = display_text(variables[mode], data, unit, position)
+
+        #if humidity exceeds safe levels flash red
+        if(data > 70):
+            print("humidity above safe levels")
+        elif(data < 20):
+            print("humidity below safe levels")
+        else:
+            print("humidity acceptable")
+        ##if humidity subceeds safe levels flash blue
+
+    if mode == 3:
+        # variable = "light"
+        unit = "Lux"
+        if proximity < 10:
+            data = ltr559.get_lux()
+        else:
+            data = 1
+        position = display_text(variables[mode], data, unit, position)
+
+    if mode == 4:
+        # variable = "ox"
+        unit = "kOhm" #0.8 - 20 for NO2
+        data = gas.read_all()
+        data = data.oxidising / 1000
+        position = display_text(variables[mode], data, unit, position)
+
+        if((data + 0.05 - 0.8) / 1.9195 < 10):
+            print("NO2 levels are good!")
+        elif((data +0.05 - 0.8) / 1.9195 < 20):
+            print("NO2 levels are high but still good")
+        elif((data + 0.05 - 0.8) / 1.9195 >= 20):
+            print("NO2 levels are above measurable levels")
             
-            if(data > 30):
-                print("Temperiture exceeds safe value")
-                unit = "C Temperiture exceeds safe value"
-                #maybe warn someone here? buzzer??
-            elif():
-                print("Temperiture at safe levels")
-                unit = "C Temperiture at safe levels"
-            ##if temperiture subceeds safe levels flash blue 13deg
-            elif(data < 13):
-                print("Temperiture below safe value")
-                unit = "C Temperiture below safe value"
-                #maybe warn someone here? buzzer??
+    if mode == 5:
+        # variable = "red"
+        unit = "kOhm" #100-1500 for CO
+        data = gas.read_all()
+        data = data.reducing / 1000
+        position = display_text(variables[mode], data, unit, position)
 
-            position = display_text(variables[mode], data, unit, position)
+        if ((data - 100) / 1.4 > 0):
+            print("CO levels are safe")
+        elif ((data - 100) / 1.4 > 10):
+            print("CO levels are concerning")
+        elif ((data - 100) / 1.4 > 50):
+            print("CO levels are not safe, do not spend longer than 30 minutes in here")
+        elif ((data - 100) / 1.4 > 200):
+            print("CO levels are dangerous")
+        elif ((data - 100) / 1.4 > 400):
+            print("CO levels are highly dangerous")
+        elif ((data - 100) / 1.4 > 800):
+            print("leave room immediately")
 
-        if mode == 1:
-            # variable = "pressure"
-            unit = "hPa"
-            data = bme280.get_pressure()
-            position = display_text(variables[mode], data, unit, position)
+    if mode == 6:
+        # variable = "nh3"
+        unit = "kOhm" #10 - 1500 for NH3 
+        data = gas.read_all()
+        data = data.nh3 / 1000
+        position = display_text(variables[mode], data, unit, position)
 
-        if mode == 2:
-            # variable = "humidity"
-            unit = "%"
-            data = bme280.get_humidity()
-            position = display_text(variables[mode], data, unit, position)
+        if((data - 10) / 4.96666666667 < 25):
+            print("ammonia levels should be safe")
 
-            #if humidity exceeds safe levels flash red
-            if(data > 70):
-                print("humidity above safe levels")
-            elif(data < 20):
-                print("humidity below safe levels")
-            else:
-                print("humidity acceptable")
-            ##if humidity subceeds safe levels flash blue
-
-        if mode == 3:
-            # variable = "light"
-            unit = "Lux"
-            if proximity < 10:
-                data = ltr559.get_lux()
-            else:
-                data = 1
-            position = display_text(variables[mode], data, unit, position)
-
-        if mode == 4:
-            # variable = "ox"
-            unit = "kOhm" #0.8 - 20 for NO2
-            data = gas.read_all()
-            data = data.oxidising / 1000
-            position = display_text(variables[mode], data, unit, position)
-
-            if((data + 0.05 - 0.8) / 1.9195 < 10):
-                print("NO2 levels are good!")
-            elif((data +0.05 - 0.8) / 1.9195 < 20):
-                print("NO2 levels are high but still good")
-            elif((data + 0.05 - 0.8) / 1.9195 >= 20):
-                print("NO2 levels are above measurable levels")
-                
-        if mode == 5:
-            # variable = "red"
-            unit = "kOhm" #100-1500 for CO
-            data = gas.read_all()
-            data = data.reducing / 1000
-            position = display_text(variables[mode], data, unit, position)
-
-            if ((data - 100) / 1.4 > 0):
-                print("CO levels are safe")
-            elif ((data - 100) / 1.4 > 10):
-                print("CO levels are concerning")
-            elif ((data - 100) / 1.4 > 50):
-                print("CO levels are not safe, do not spend longer than 30 minutes in here")
-            elif ((data - 100) / 1.4 > 200):
-                print("CO levels are dangerous")
-            elif ((data - 100) / 1.4 > 400):
-                print("CO levels are highly dangerous")
-            elif ((data - 100) / 1.4 > 800):
-                print("leave room immediately")
-
-        if mode == 6:
-            # variable = "nh3"
-            unit = "kOhm" #10 - 1500 for NH3 
-            data = gas.read_all()
-            data = data.nh3 / 1000
-            position = display_text(variables[mode], data, unit, position)
-
-            if((data - 10) / 4.96666666667 < 25):
-                print("ammonia levels should be safe")
-
-        switchCounter += 1
-except:
-    print("error") 
+    switchCounter += 1
