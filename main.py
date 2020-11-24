@@ -157,8 +157,8 @@ while True:
         last_page = time.time()
         switchCounter = 0
         position = 0
-        calibrationReading = gas.read_all()
-        calibrationReading = calibrationReading.reducing / 1000
+        calibrationRead = gas.read_all()
+        calibrationRead = calibrationRead.reducing / 1000
 
     # One mode for each variable
     if mode == 0:
@@ -236,7 +236,7 @@ while True:
         data = gas.read_all()
         data = data.reducing / 1000
 
-        print(math.pow(10, -1.25 * math.log10(data/calibration) + 0.64))
+        print(math.pow(10, -1.25 * math.log10(data/calibrationRead) + 0.64))
 
         if ((data - 100) / 1.4 < 10):
            unit = "ppm CO levels are safe"
