@@ -133,7 +133,7 @@ try:
             mode %= len(variables)
             last_page = time.time()
 
-        if (switchCounter > 50):
+        if (switchCounter > 100):
             mode += 1
             mode %= len(variables)
             last_page = time.time()
@@ -151,8 +151,15 @@ try:
             data = raw_temp - ((avg_cpu_temp - raw_temp) / factor)
             display_text(variables[mode], data, unit)
 
-            #if temperiture exceeds safe levels flash red
-            ##if temperiture subceeds safe levels flash blue
+            if(data > 25):
+                print("Temperiture exceeds safe value")
+                #maybe warn someone here? buzzer??
+            elif(data < 13):
+                print("Temperiture below safe value")
+                #maybe warn someone here? buzzer??
+            elif():
+                print("Temperiture at safe levels")
+            ##if temperiture subceeds safe levels flash blue 13deg
 
         if mode == 1:
             # variable = "pressure"
