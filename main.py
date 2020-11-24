@@ -141,7 +141,7 @@ for v in variables:
 # The main loop
 
 while True:
-    proximity = ltr559.get_proximity()
+    #proximity = ltr559.get_proximity()
 
     # If the proximity crosses the threshold, toggle the mode
 #   if (proximity > 1500 and time.time() - last_page > delay):
