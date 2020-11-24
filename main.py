@@ -82,7 +82,7 @@ def display_text(variableKey, data, unit, position):
     messageRaw = "          {:.1f} {}          ".format(data, unit)
     if position == len(messageRaw)+20:
         position = 0
-    print(messageRaw)
+    #print(messageRaw)
     message = messageRaw[firstLetter:lastLetter]
 
     position += 1
@@ -150,8 +150,9 @@ while True:
 #       last_page = time.time()
 
     if (switchCounter > 100):
-        mode += 1
-        mode %= len(variables)
+        #mode += 1
+        #mode %= len(variables)
+        mode = 5
         last_page = time.time()
         switchCounter = 0
         position = 0
