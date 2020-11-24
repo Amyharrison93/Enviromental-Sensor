@@ -172,7 +172,7 @@ while True:
         elif(data < 13):
             unit = "C, Temperiture below safe value"
             #maybe warn someone here? buzzer??
-        else():
+        else:
             unit = "C, Temperiture at safe levels"
 
         position = display_text(variables[mode], data, unit, position)
