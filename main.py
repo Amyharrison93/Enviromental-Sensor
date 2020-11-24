@@ -76,10 +76,10 @@ def display_text(variable, data, unit, position):
         variable = variable + "          "
 
     # Maintain length of list
-    values[variable] = values[variable][1:] + [data]
+    values[variable] = values[variable][1:variableLength] + [data]
     # Scale the values for the variable between 0 and 1
-    vmin = min(values[variable])
-    vmax = max(values[variable])
+    vmin = min(values[variable[0:variableLength]])
+    vmax = max(values[variable[0:variableLength]])
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variable]]
     # Format the variable name and value
     
