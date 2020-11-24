@@ -77,7 +77,7 @@ def display_text(variableKey, data, unit, position):
     if not(variable[len(variable)-2:len(variable)-1] == " "):
         variable = "          " + variable + "          "
     
-    print(variable[0:variableLength])
+    print(variable[10:variableLength])
     
     # Maintain length of list
     values[variable] = values[variableKey][1:] + [data]
@@ -87,7 +87,7 @@ def display_text(variableKey, data, unit, position):
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variable[0:variableLength]]]
     # Format the variable name and value
     
-    message = "{}: {:.1f} {}".format(variable[firstLetter:lastLetter], data, unit)
+    message = "{}: {:.1f} {}".format(variableKey[firstLetter:lastLetter], data, unit)
 
     position += 1
     logging.info(message)
