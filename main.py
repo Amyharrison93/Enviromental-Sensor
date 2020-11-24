@@ -74,6 +74,7 @@ def display_text(variable, data, unit):
     message = "{}: {:.1f} {}".format(variable[:4], data, unit)
     logging.info(message)
     draw.rectangle((0, 0, WIDTH, HEIGHT), (255, 255, 255))
+
     for i in range(len(colours)):
         # Convert the values to colours from red to blue
         colour = (1.0 - colours[i]) * 0.6
@@ -149,18 +150,21 @@ try:
             avg_cpu_temp = sum(cpu_temps) / float(len(cpu_temps))
             raw_temp = bme280.get_temperature()
             data = raw_temp - ((avg_cpu_temp - raw_temp) / factor)
-            display_text(variables[mode], data, unit)
-
+            
             if(data > 30):
                 print("Temperiture exceeds safe value")
+                unit = "C Temperiture exceeds safe value"
                 #maybe warn someone here? buzzer??
             elif():
                 print("Temperiture at safe levels")
+                unit = "C Temperiture at safe levels"
             ##if temperiture subceeds safe levels flash blue 13deg
             elif(data < 13):
                 print("Temperiture below safe value")
+                unit = "C Temperiture below safe value"
                 #maybe warn someone here? buzzer??
-            
+
+            display_text(variables[mode], data, unit)
 
         if mode == 1:
             # variable = "pressure"
