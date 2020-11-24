@@ -134,7 +134,7 @@ variables = ["temperature",
 values = {}
 
 switchCounter = 0
-
+position = 0
 for v in variables:
     values[v] = [1] * WIDTH
 
