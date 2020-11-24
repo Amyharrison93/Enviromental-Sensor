@@ -219,11 +219,11 @@ try:
                 print("CO levels are concerning")
             elif ((data - 100) / 1.4 > 50):
                 print("CO levels are not safe, do not spend longer than 30 minutes in here")
-            if ((data - 100) / 1.4 > 200):
+            elif ((data - 100) / 1.4 > 200):
                 print("CO levels are dangerous")
-            if ((data - 100) / 1.4 > 400):
+            elif ((data - 100) / 1.4 > 400):
                 print("CO levels are highly dangerous")
-            if ((data - 100) / 1.4 > 800):
+            elif ((data - 100) / 1.4 > 800):
                 print("leave room immediately")
 
         if mode == 6:
