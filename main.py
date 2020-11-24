@@ -63,8 +63,9 @@ top_pos = 25
 
 
 # Displays data and text on the 0.96" LCD
-def display_text(variable, data, unit, position):
+def display_text(variableKey, data, unit, position):
 
+    variable = variableKey
     variableLength = len(variable)
 
     if position < 11:
@@ -78,10 +79,10 @@ def display_text(variable, data, unit, position):
     print(variable[0:variableLength])
     
     # Maintain length of list
-    values[variable] = values[variable][0:variableLength] + [data]
+    values[variable] = values[variableKey][1:] + [data]
     # Scale the values for the variable between 0 and 1
-    vmin = min(values[variable[0:variableLength]])
-    vmax = max(values[variable[0:variableLength]])
+    vmin = min(values[variableKey])
+    vmax = max(values[variableKey])
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variable[0:variableLength]]]
     # Format the variable name and value
     
