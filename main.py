@@ -74,9 +74,6 @@ def display_text(variableKey, data, unit, position):
     firstLetter = position
     lastLetter = position + 10
     
-    if not(variable[len(variable)-2:len(variable)-1] == " "):
-        variable = "          " + variable + "          "
-    
     # Maintain length of list
     values[variable] = values[variableKey][1:] + [data]
     # Scale the values for the variable between 0 and 1
@@ -85,7 +82,9 @@ def display_text(variableKey, data, unit, position):
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variableKey[0:variableLength]]]
     # Format the variable name and value
     
-    message = "{}: {:.1f} {}".format(variable[firstLetter:lastLetter], data, unit)
+    messageRaw = "          {}: {:.1f} {}          ".format(variableKey, data, unit)
+    
+    message = message[firstLetter:lastLetter]
 
     position += 1
     logging.info(message)
@@ -146,10 +145,10 @@ while True:
     proximity = ltr559.get_proximity()
 
     # If the proximity crosses the threshold, toggle the mode
-    if (proximity > 1500 and time.time() - last_page > delay):
-        mode += 1
-        mode %= len(variables)
-        last_page = time.time()
+#   if (proximity > 1500 and time.time() - last_page > delay):
+#       mode += 1
+#       mode %= len(variables)
+#       last_page = time.time()
 
     if (switchCounter > 100):
         mode += 1
