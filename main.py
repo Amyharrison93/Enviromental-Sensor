@@ -154,19 +154,19 @@ try:
             if(data > 30):
                 print("Temperiture exceeds safe value")
                 #maybe warn someone here? buzzer??
-            elif(data < 13):
-                print("Temperiture below safe value")
-                #maybe warn someone here? buzzer??
             elif():
                 print("Temperiture at safe levels")
             ##if temperiture subceeds safe levels flash blue 13deg
+            elif(data < 13):
+                print("Temperiture below safe value")
+                #maybe warn someone here? buzzer??
+            
 
         if mode == 1:
             # variable = "pressure"
             unit = "hPa"
             data = bme280.get_pressure()
             display_text(variables[mode], data, unit)
-
 
         if mode == 2:
             # variable = "humidity"
@@ -212,16 +212,18 @@ try:
             data = gas.read_all()
             data = data.reducing / 1000
             display_text(variables[mode], data, unit)
-        
-            if ((data - 100) / 1.4 < 10):
+
+            if ((data - 100) / 1.4 > 0):
                 print("CO levels are safe")
-            elif ((data - 100) / 1.4 < 50):
+            elif ((data - 100) / 1.4 > 10):
+                print("CO levels are concerning")
+            elif ((data - 100) / 1.4 > 50):
                 print("CO levels are not safe, do not spend longer than 30 minutes in here")
-            if ((data - 100) / 1.4 < 200):
+            if ((data - 100) / 1.4 > 200):
                 print("CO levels are dangerous")
-            if ((data - 100) / 1.4 < 400):
+            if ((data - 100) / 1.4 > 400):
                 print("CO levels are highly dangerous")
-            if ((data - 100) / 1.4 < 800):
+            if ((data - 100) / 1.4 > 800):
                 print("leave room immediately")
 
         if mode == 6:
