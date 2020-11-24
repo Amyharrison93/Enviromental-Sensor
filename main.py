@@ -67,12 +67,13 @@ def display_text(variableKey, data, unit, position):
 
     variable = variableKey
     variableLength = len(variable)
-
+    
+    if position == variableLength:
+        position = 0
     if position < 11:
         firstLetter = position
         lastLetter = position + 10
-    if position == variableLength:
-        position = 0
+    
     if not(variable[len(variable)-2:len(variable)-1] == " "):
         variable = variable + "          "
     
