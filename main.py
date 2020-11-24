@@ -75,7 +75,7 @@ def display_text(variableKey, data, unit, position):
         lastLetter = position + 10
     
     if not(variable[len(variable)-2:len(variable)-1] == " "):
-        variable = variable + "          "
+        variable = "          " + variable + "          "
     
     print(variable[0:variableLength])
     
