@@ -216,15 +216,15 @@ while True:
         
 
         if((data + 0.05 - 0.8) / 1.9195 < 10):
-            unit = "kOhm, NO2 levels are good!"
+            unit = "ppm, NO2 levels are good!"
 
         elif((data +0.05 - 0.8) / 1.9195 < 20):
-            unit = "kOhm, NO2 levels are high but still good"
+            unit = "ppm, NO2 levels are high but still good"
 
         elif((data + 0.05 - 0.8) / 1.9195 >= 20):
-            unit = "kOhm, NO2 levels are above measurable levels"
+            unit = "ppm, NO2 levels are above measurable levels"
         
-        position = display_text(variables[mode], data, unit, position)
+        position = display_text(variables[mode], (data + 0.05 - 0.8) / 1.9195, unit, position)
 
     if mode == 5:
         # variable = "red"
@@ -233,19 +233,19 @@ while True:
         data = data.reducing / 1000
 
         if ((data - 100) / 1.4 > 0):
-           unit = "kOhm CO levels are safe"
+           unit = "ppm CO levels are safe"
         elif ((data - 100) / 1.4 > 10):
-            unit = "kOhm CO levels are concerning"
+            unit = "ppm CO levels are concerning"
         elif ((data - 100) / 1.4 > 50):
-            unit = "kOhm CO levels are not safe, do not spend longer than 30 minutes in here"
+            unit = "ppm CO levels are not safe, do not spend longer than 30 minutes in here"
         elif ((data - 100) / 1.4 > 200):
-            unit = "kOhm CO levels are dangerous"
+            unit = "ppm CO levels are dangerous"
         elif ((data - 100) / 1.4 > 400):
-            unit = "kOhm CO levels are highly dangerous"
+            unit = "ppm CO levels are highly dangerous"
         elif ((data - 100) / 1.4 > 800):
-            unit = "kOhm leave room immediately"
+            unit = "ppm leave room immediately"
 
-        position = display_text(variables[mode], data, unit, position)
+        position = display_text(variables[mode], (data - 100) / 1.4, unit, position)
 
     if mode == 6:
         # variable = "nh3"
@@ -255,8 +255,8 @@ while True:
         
 
         if((data - 10) / 4.96666666667 < 25):
-            unit = "kOhm ammonia levels should be safe"
+            unit = "ppm ammonia levels should be safe"
             
-        position = display_text(variables[mode], data, unit, position)
+        position = display_text(variables[mode], (data - 10) / 4.96666666667, unit, position)
 
     switchCounter += 1
