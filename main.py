@@ -137,6 +137,7 @@ values = {}
 switchCounter = 0
 position = 0
 calibrationRead = 0
+runtime = 0
 for v in variables:
     values[v] = [1] * WIDTH
 
