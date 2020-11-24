@@ -116,6 +116,7 @@ variables = ["temperature",
              "nh3"]
 
 values = {}
+switchCounter = 0
 
 for v in variables:
     values[v] = [1] * WIDTH
@@ -126,10 +127,11 @@ try:
         proximity = ltr559.get_proximity()
 
         # If the proximity crosses the threshold, toggle the mode
-        if proximity > 1500 and time.time() - last_page > delay:
+        if (proximity > 1500 and time.time() - last_page > delay) or (switchCounter > 50):
             mode += 1
             mode %= len(variables-1)
             last_page = time.time()
+            switchCounter = 0
 
         # One mode for each variable
         if mode == 0:
@@ -185,22 +187,6 @@ try:
             data = data.nh3 / 1000
             display_text(variables[mode], data, unit)
 
-# Exit cleanly
-except KeyboardInterrupt:
-    sys.exit(0)
-© 2020 GitHub, Inc.
-Terms
-Privacy
-
-    Security
-    Status
-    Help
-    Contact GitHub
-    Pricing
-    API
-    Training
-    Blog
-    About
-
-
-
+        switchCounter + switchCounter + 1
+except:
+    print("error") 
