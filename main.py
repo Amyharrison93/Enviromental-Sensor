@@ -72,7 +72,7 @@ def display_text(variable, data, unit, position):
         lastLetter = position + 10
     if position == variableLength:
         position = 0
-    if !(variable[len(variable)-2:len(variable)-1] == " "):
+    if not(variable[len(variable)-2:len(variable)-1] == " "):
         variable = variable + "          "
 
     # Maintain length of list
