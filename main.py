@@ -201,7 +201,7 @@ try:
 
             if((data + 0.05 - 0.8) / 1.9195 < 10):
                 print("NO2 levels are good!")
-            elif(data +0.05 - 0.8) / 1.9195 < 20):
+            elif((data +0.05 - 0.8) / 1.9195 < 20):
                 print("NO2 levels are high but still good")
             elif((data + 0.05 - 0.8) / 1.9195 >= 20):
                 print("NO2 levels are above measurable levels")
