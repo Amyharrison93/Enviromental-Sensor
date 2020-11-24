@@ -154,6 +154,7 @@ while True:
         mode %= len(variables)
         last_page = time.time()
         switchCounter = 0
+        position = 0
 
     # One mode for each variable
     if mode == 0:
