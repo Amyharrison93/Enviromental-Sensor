@@ -79,7 +79,7 @@ def display_text(variableKey, data, unit, position):
     colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variableKey[0:variableLength]]]
     # Format the variable name and value
     
-    messageRaw = "     {}: {:.1f} {}     ".format(variableKey, data, unit)
+    messageRaw = "     {:.1f} {}     ".format(data, unit)
     if position == len(messageRaw)+10:
         position = 0
 
