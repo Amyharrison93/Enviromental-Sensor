@@ -151,7 +151,7 @@ try:
             data = raw_temp - ((avg_cpu_temp - raw_temp) / factor)
             display_text(variables[mode], data, unit)
 
-            if(data > 25):
+            if(data > 30):
                 print("Temperiture exceeds safe value")
                 #maybe warn someone here? buzzer??
             elif(data < 13):
@@ -175,6 +175,12 @@ try:
             display_text(variables[mode], data, unit)
 
             #if humidity exceeds safe levels flash red
+            if(data > 70):
+                print("humidity above safe levels")
+            elif(data < 20):
+                print("humidity below safe levels")
+            else:
+                print("humidity acceptable")
             ##if humidity subceeds safe levels flash blue
 
         if mode == 3:
@@ -187,25 +193,46 @@ try:
             display_text(variables[mode], data, unit)
 
         if mode == 4:
-            # variable = "oxidised"
-            unit = "kO"
+            # variable = "ox"
+            unit = "kOhm" #0.8 - 20 for NO2
             data = gas.read_all()
             data = data.oxidising / 1000
             display_text(variables[mode], data, unit)
 
+            if((data + 0.05 - 0.8) / 1.9195 < 10):
+                print("NO2 levels are good!")
+            elif(data +0.05 - 0.8) / 1.9195 < 20):
+                print("NO2 levels are high but still good")
+            elif((data + 0.05 - 0.8) / 1.9195 >= 20):
+                print("NO2 levels are above measurable levels")
+                
         if mode == 5:
-            # variable = "reduced"
-            unit = "kO"
+            # variable = "red"
+            unit = "kOhm" #100-1500 for CO
             data = gas.read_all()
             data = data.reducing / 1000
             display_text(variables[mode], data, unit)
+        
+            if ((data - 100) / 1.4 < 10):
+                print("CO levels are safe")
+            elif ((data - 100) / 1.4 < 50):
+                print("CO levels are not safe, do not spend longer than 30 minutes in here")
+            if ((data - 100) / 1.4 < 200):
+                print("CO levels are dangerous")
+            if ((data - 100) / 1.4 < 400):
+                print("CO levels are highly dangerous")
+            if ((data - 100) / 1.4 < 800):
+                print("leave room immediately")
 
         if mode == 6:
             # variable = "nh3"
-            unit = "kO"
+            unit = "kOhm" #10 - 1500 for NH3 
             data = gas.read_all()
             data = data.nh3 / 1000
             display_text(variables[mode], data, unit)
+
+            if((data - 10) / 4.96666666667 < 25)
+                print("ammonia levels should be safe")
 
         switchCounter += 1
 except:
