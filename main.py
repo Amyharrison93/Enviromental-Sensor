@@ -235,17 +235,17 @@ while True:
 
         print((data - 100) / 1.4)
 
-        if ((data - 100) / 1.4 > 0):
+        if ((data - 100) / 1.4 < 10):
            unit = "ppm CO levels are safe"
-        elif ((data - 100) / 1.4 > 10):
+        elif ((data - 100) / 1.4 < 20):
             unit = "ppm CO levels are concerning"
-        elif ((data - 100) / 1.4 > 50):
+        elif ((data - 100) / 1.4 < 50):
             unit = "ppm CO levels are not safe, do not spend longer than 30 minutes in here"
-        elif ((data - 100) / 1.4 > 200):
+        elif ((data - 100) / 1.4 < 200):
             unit = "ppm CO levels are dangerous"
-        elif ((data - 100) / 1.4 > 400):
+        elif ((data - 100) / 1.4 < 400):
             unit = "ppm CO levels are highly dangerous"
-        elif ((data - 100) / 1.4 > 800):
+        elif ((data - 100) / 1.4 < 800):
             unit = "ppm leave room immediately"
 
         position = display_text(variables[mode], (data - 100) / 1.4, unit, position)
