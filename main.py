@@ -252,6 +252,6 @@ while True:
         position = display_text(variables[mode], data, unit, position)
 
         if((data - 10) / 4.96666666667 < 25):
-            unit = "kOhm ammonia levels should be safe")
+            unit = "kOhm ammonia levels should be safe"
 
     switchCounter += 1
