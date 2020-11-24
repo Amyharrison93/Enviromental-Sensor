@@ -84,7 +84,7 @@ def display_text(variableKey, data, unit, position):
     # Scale the values for the variable between 0 and 1
     vmin = min(values[variableKey])
     vmax = max(values[variableKey])
-    colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variable[0:variableLength]]]
+    colours = [(v - vmin + 1) / (vmax - vmin + 1) for v in values[variableKey[0:variableLength]]]
     # Format the variable name and value
     
     message = "{}: {:.1f} {}".format(variableKey[firstLetter:lastLetter], data, unit)
