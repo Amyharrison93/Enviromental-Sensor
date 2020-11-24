@@ -169,12 +169,11 @@ while True:
         if(data > 30):
             unit = "C, Temperiture exceeds safe value"
             #maybe warn someone here? buzzer??
-        elif():
-            unit = "C, Temperiture at safe levels"
-
         elif(data < 13):
             unit = "C, Temperiture below safe value"
             #maybe warn someone here? buzzer??
+        else():
+            unit = "C, Temperiture at safe levels"
 
         position = display_text(variables[mode], data, unit, position)
 
@@ -213,7 +212,7 @@ while True:
         #unit = "kOhm" #0.8 - 20 for NO2
         data = gas.read_all()
         data = data.oxidising / 1000
-        position = display_text(variables[mode], data, unit, position)
+        
 
         if((data + 0.05 - 0.8) / 1.9195 < 10):
             unit = "kOhm, NO2 levels are good!"
@@ -223,13 +222,14 @@ while True:
 
         elif((data + 0.05 - 0.8) / 1.9195 >= 20):
             unit = "kOhm, NO2 levels are above measurable levels"
-            
+        
+        position = display_text(variables[mode], data, unit, position)
+
     if mode == 5:
         # variable = "red"
         #unit = "kOhm" #100-1500 for CO
         data = gas.read_all()
         data = data.reducing / 1000
-        position = display_text(variables[mode], data, unit, position)
 
         if ((data - 100) / 1.4 > 0):
            unit = "kOhm CO levels are safe"
@@ -244,14 +244,18 @@ while True:
         elif ((data - 100) / 1.4 > 800):
             unit = "kOhm leave room immediately"
 
+        position = display_text(variables[mode], data, unit, position)
+
     if mode == 6:
         # variable = "nh3"
-        unit = "kOhm" #10 - 1500 for NH3 
+        #unit = "kOhm" #10 - 1500 for NH3 
         data = gas.read_all()
         data = data.nh3 / 1000
-        position = display_text(variables[mode], data, unit, position)
+        
 
         if((data - 10) / 4.96666666667 < 25):
             unit = "kOhm ammonia levels should be safe"
+            
+        position = display_text(variables[mode], data, unit, position)
 
     switchCounter += 1
