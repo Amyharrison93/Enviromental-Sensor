@@ -5,6 +5,7 @@ import colorsys
 import os
 import sys
 import ST7735
+import math
 try:
     # Transitional fix for breaking change in LTR559
     from ltr559 import LTR559
@@ -233,7 +234,7 @@ while True:
         data = gas.read_all()
         data = data.reducing / 1000
 
-        print(data/1.4)
+        print(math.pow(10, -1.25 * math.log10(data) + 0.64))
 
         if ((data - 100) / 1.4 < 10):
            unit = "ppm CO levels are safe"
