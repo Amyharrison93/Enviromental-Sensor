@@ -164,7 +164,7 @@ while True:
         calibrationRead = gas.read_all()
         calibrationRed = calibrationRead.reducing / 1000
         calibrationOx = calibrationRead.oxidising / 1000
-        calibrationNH3 = calibrationRead.NH3 / 1000
+        calibrationNH3 = calibrationRead.nh3 / 1000
     else:
         calibrationRead = 1
         calibrationRed = 1
@@ -230,13 +230,15 @@ while True:
         data = gas.read_all()
         data = data.oxidising / 1000
 
-        if((data + 0.05 - 0.8) / 1.9195 < 10):
+        data = (math.pow(10, -1.25 * math.log10(data/calibrationOx) + 0.64))
+
+        if(data < 10):
             unit = "ppm, NO2 levels are good!"
 
-        elif((data +0.05 - 0.8) / 1.9195 < 20):
+        elif(data< 20):
             unit = "ppm, NO2 levels are high but still good"
 
-        elif((data + 0.05 - 0.8) / 1.9195 >= 20):
+        elif(data>= 20):
             unit = "ppm, NO2 levels are above measurable levels"
         
         position = display_text(variables[mode], (data + 0.05 - 0.8) / 1.9195, unit, position)
@@ -272,8 +274,9 @@ while True:
         data = gas.read_all()
         data = data.nh3 / 1000
         
+        data = (math.pow(10, -1.25 * math.log10(data/calibrationNH3) + 0.64))
 
-        if((data - 10) / 4.96666666667 < 25):
+        if(data < 25):
             unit = "ppm ammonia levels should be safe"
             
         position = display_text(variables[mode], (data - 10) / 4.96666666667, unit, position)
